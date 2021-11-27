@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useEffect} from 'react'
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import {BrowserRouter as Router, Routes,Route} from 'react-router-dom'
+import Homepage from "./components/Homepage/Homepage";
+import Posts from "./components/Posts/Posts";
+import Navbar from './components/Navbar/Navbar';
+
+
+import axiosInstance from './axiosInstance';
+import {Spinner} from 'react-bootstrap';
+import AllUser from './components/User/AllUser';
+import UserPublicProfile from './components/User/UserPublicProfile';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [userDetails,setUserDetails] = useState("");
+  const [isLoading,setLoading]=useState(true);
+  
+
+  function setUserLogged(response){
+    setUserDetails(response)
+  }
+
+  useEffect(()=>{
+      
+      axiosInstance.get("/api/user/")
+      .then((response)=>{
+          setUserDetails(response.data);
+      });
+      setLoading(false);
+
+  },[userDetails])
+  if(isLoading){
+      return (
+        <div className="loading-spinner-style">
+          <Spinner animation="border"  role="status" />
+        </div>
+        
+    )
+  }
+  else{
+    return (
+      <Router>
+        <Navbar userDetails={userDetails} setUserLogged={setUserLogged} />
+        <Routes>
+            
+            <Route path="/register" element={<Register  />}/>
+            <Route path="/login" element={<Login userDetails={userDetails} setUserLogged={setUserLogged} />}/>
+            <Route path="/" element={<Homepage userDetails={userDetails}/>} />
+            <Route path="/posts/:postId" element={<Posts />} />
+            <Route path="/users/" element={<AllUser />} />
+            <Route path="/user/:username" element={<UserPublicProfile />} />
+        </Routes>
+      </Router>
+    );
+  }
 }
+
 
 export default App;

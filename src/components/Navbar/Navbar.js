@@ -1,0 +1,40 @@
+import React from 'react'
+import {Button} from 'react-bootstrap'
+import {NavLink} from 'react-router-dom'
+import axiosInstance from '../../axiosInstance'
+
+function Navbar(props) {
+    
+    const userDetails = props.userDetails
+    function logout(){
+        axiosInstance.get('/api/logout')
+        .then(response=>{
+        })
+        props.setUserLogged("")
+    }
+    return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container">
+            <NavLink className="navbar-brand" to="/">Twitter</NavLink>
+            
+            <div className="collapse navbar-collapse">
+                <div className="navbar-nav ml-auto">
+                
+                {userDetails ?<Button className="nav-link logout-button" onClick={logout}>Logout</Button>
+                    :<>
+                        <NavLink className="nav-link" to="/login">Login</NavLink>
+                        <NavLink className="nav-link" to="/register">Register</NavLink>
+                    </>
+                }
+                
+                
+                <NavLink className="nav-link " to="/profile">Hello {userDetails?userDetails.username:"Guest!"}</NavLink>
+                </div>
+            </div>
+            </div>
+        </nav>
+    )
+    
+}
+
+export default Navbar

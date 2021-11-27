@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Acme&display=swap');
+
+.post-by-id-container{
+    position: relative;
+    border: 1px solid #efefef;
+    border-radius: 25px;
+    font-family: Poppins;
+    border-top: 40px solid lightgray;
+    padding:12px 15px;
+    margin:20px auto 50px;
+    max-width: 450px;
+    width: 70%;
+    box-shadow: 0px 3px 8px 3px lightgrey;
+}
+
+.user-box{
+
+    position: absolute;
+    text-decoration: none;
+    top:-30px;
+    left:24px;
+    font-size: 15px;
+    font-family: Poppins;
+    font-weight: bold;
+    color:#3d3d3d;
+}
+.user-box:hover{
+    text-decoration: none;
+    color:#646363;
+}
+.post-content{
+    margin:30px 14px 50px;
+    font-size: 32px;
+    font-family: Acme;
+
+}
+.post-posted-on{
+    position: absolute;
+    bottom: 0px;
+    left: 60%;
+    font-size: 14px;
+    font-weight: 600;
+    color:#c5c5c5;
+}
+.post-content-with-link{
+    text-decoration: none;
+    margin:12px;
+    font-size: 24px;
+    color:grey;
+    font-family: Poppins;
+
+}
+.post-content-with-link:hover{
+    text-decoration: none;
+    margin:14px;
+    color:black;
+}

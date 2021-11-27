@@ -1,0 +1,14 @@
+.loading-spinner-style{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.logout-button{
+    background-color: transparent;
+    border: 0px;
+}
+.logout-button:hover{
+    background-color: transparent;
+    border: 0px;
+}
