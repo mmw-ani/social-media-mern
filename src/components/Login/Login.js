@@ -3,13 +3,16 @@ import {Button} from 'react-bootstrap'
 import axiosInstance from "../../axiosInstance";
 import { useNavigate,Navigate } from "react-router";
 import "./index.css"
+import Cookies from 'universal-cookie';
+
+
 
 function Login(props) {
     const [password,setPassword]= useState('');
     const [username,setUsername]= useState('');
     const [successResponse,setSuccessResponse] = useState('')
     const [validityError,setValidityError]=useState('');
-
+    const cookies = new Cookies();
 
 
     const navigate = useNavigate()
@@ -21,7 +24,9 @@ function Login(props) {
             username,
             password
         }
-        axiosInstance.post('/api/login',paramters).then((response)=>{
+        axiosInstance.post('/api/login/',paramters).then((response)=>{
+            const token = response.data.jwt;
+            cookies.set('jwt',token,{path:'/'});
             
             axiosInstance.get("/api/user/")
             .then((response)=>{
@@ -32,7 +37,7 @@ function Login(props) {
             setValidityError('');
         }).catch((error)=>{
             
-            setValidityError(error.response.data);
+            setValidityError(error.response);
                 
         })
     };
