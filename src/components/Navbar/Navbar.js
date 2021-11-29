@@ -7,7 +7,8 @@ function Navbar(props) {
     const userDetails = props.userDetails
     function logout(){
         const cookie = new Cookie();
-        cookie.remove('jwt');
+        cookie.set('jwt',"",{path:'/'});
+        localStorage.removeItem('get');        
         props.setUserLogged("")
     }
     return (

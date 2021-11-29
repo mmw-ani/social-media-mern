@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axiosInstance from "../../axiosInstance";
-import {Link,Navigate} from 'react-router-dom'
-import { Container } from 'react-bootstrap';
+import {Navigate} from 'react-router-dom'
+import { Row,Col } from 'react-bootstrap';
 import "./index.css"
 import PostContainer from '../Posts/PostContainer';
 export default class Homepage extends Component {
@@ -41,6 +41,8 @@ export default class Homepage extends Component {
     }
     handleCreatePost=(e)=>{
         e.preventDefault();
+        this.setState({createPostError:""})
+
         const body={
             post:this.state.createPost
         }
@@ -59,12 +61,15 @@ export default class Homepage extends Component {
             this.setState({createPostError:"Empty Post!"})
         }
     }
+    
+
     render() {
         const posts = this.state.posts;     
         const result = posts.map((eachPost)=>{
             
             return (
                     <PostContainer 
+                        key={eachPost._id}
                         link={true}
                         postId = {eachPost._id}
                         post={eachPost.post}
@@ -74,36 +79,63 @@ export default class Homepage extends Component {
             )
         })
         const userIsLoggedIn = this.props.userDetails
+        let nameOfUser = undefined
+        if(userIsLoggedIn){
+            nameOfUser = this.props.userDetails.name.split(" ");
+            nameOfUser = nameOfUser[0][0]+nameOfUser[1][0];
+        }
         return (
             
-                <Container className="text-center">
+                <div className="">
                     {!userIsLoggedIn&&
-                    <Navigate to="/login" replace={true} /> 
-                    
+                        <Navigate to="/login" replace={true} /> 
                     }
-                    <div className="m-2" >
-                        <Link to="/users">User</Link>
+                    
+
+                        <div xs={6} className="homepage-container px-2 pt-1">
+                            <Row>
+                                <Col xs={2} className="text-center">
+                                    <p className="homepage-image-box">
+                                        {nameOfUser}
+                                    </p>
+                                </Col>
+                                <Col xs={10}>
+                                    <form onSubmit={this.handleCreatePost}>
+                                    
+                                        <div className="post-field-input mt-2">
+                                            <textarea
+                                                rows={5}
+                                                className="form-control input-field-text-area"
+                                                placeholder="What's happening?"        
+                                                onChange={this.onChangePostCreate}
+                                                value={this.state.createPost}
+                                            />
+                                        </div>
+                                    
+                                        <hr className="w-75" />
+                                        <div className="text-right">
+                                            <button className="btn btn-dark " type="submit">Tweet</button>
+                                        </div>
+                                    </form>
+                                </Col>
+                            </Row>
+                    {this.state.createPostSuccess&&<div className="alert alert-success my-2" role="alert">
+                        {this.state.createPostSuccess}
+                        </div>
+                    }
+
+                    {this.state.createPostError&&
+                        <div className="alert alert-danger my-2" role="alert">
+                            {this.state.createPostError}
+                        </div>
+                    }
+                    <hr/>
+                    {
+                        
+                        result
+                    }
                     </div>
-                    <form onSubmit={this.handleCreatePost}>
-                        <textarea
-                            rows={5}
-                            className="form-control"
-                            placeholder="Write Your Post here"        
-                            onChange={this.onChangePostCreate}
-                            value={this.state.createPost}
-                        />
-        
-                        <br />
-                        <button className="btn btn-dark" type="submit">Submit</button>
-                    </form>
-                {this.state.createPostSuccess&&<p>{this.state.createPostSuccess}</p>}
-                {this.state.createPostError&&<p>{this.state.createPostError}</p>}
-                {
-                    
-                    result
-                }
-                    
-                </Container>
+                </div>
             
         )
     }

@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import {Button} from 'react-bootstrap'
+import {Button, Container} from 'react-bootstrap'
 import axiosInstance from "../../axiosInstance";
 import { useNavigate,Navigate } from "react-router";
 import "./index.css"
@@ -12,21 +12,22 @@ function Login(props) {
     const [password,setPassword]= useState('');
     const [username,setUsername]= useState('');
     const [successResponse,setSuccessResponse] = useState('')
-    const [validityError,setValidityError]=useState('');
+    const [validityError,setValidityError]=useState([]);
     
 
 
     const navigate = useNavigate()
     const  handleSubmit = async (event)=>{
+        event.preventDefault();
+        if(username!==""&&password!==""){
         setSuccessResponse("");
         setValidityError("");
-        event.preventDefault();
+        
         const paramters={
             username,
             password
         }
         axiosInstance.post('/api/login/',paramters).then((response)=>{
-            console.log(response)
             const token = response.data.jwt;
             cookies.set('jwt',token,{path:'/'});
             
@@ -38,41 +39,47 @@ function Login(props) {
             navigate('/')         
             setValidityError('');
         }).catch((error)=>{
-            console.log(error.response)
-
+            
             setValidityError(error.response.data);
                 
-        })
+        })}
+        else{
+            setValidityError("Enter Username & Password");
+        }
     };
     
     return (
-        <div className="login-page">
+        <Container className=" mt-5 shadow registration-form">
             {props.userDetails && <Navigate to="/" replace={true} />}
+            <h3 className="text-center text-primary">Login</h3>
             <form onSubmit={handleSubmit}>
+                <label htmlFor="inputUsername font-weight-bold">Username</label>
                 <input
+                    id="inputUsername"
                     value={username}
-                    className="m-2 form-control w-50 ml-auto mr-auto"
+                    className="form-control input-field"
                     onChange={(e)=>setUsername(e.target.value)}
                     type='text'
-                    placeholder="Enter Username"
+                    placeholder="Enter your username"
                 /><br />
                 
-                
+                <label htmlFor="inputLastName">Password</label>
                 <input
                     value={password}
-                    className="m-2 form-control w-50 ml-auto mr-auto"
+                    className="form-control input-field"
                     onChange={(e)=>setPassword(e.target.value)}
                     type='password'
-                    placeholder="Enter password"
+                    placeholder="Enter your password"
                 /><br />
-                
 
-                {validityError && <p className="error-msg m-2">{validityError}</p>}
+                {validityError && <p className="text-danger text-center">{validityError}</p>}
                 {successResponse.length>0 && <p className="">{successResponse} </p> }
-                <Button type="submit">Login</Button>
+                <div className="text-center my-3">
+                <Button type="submit" className="btn-dark w-75">Login</Button>
+                </div>
             </form>
             
-        </div>
+        </Container>
     )
 }
 

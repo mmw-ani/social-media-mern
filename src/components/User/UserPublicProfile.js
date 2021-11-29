@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import {useParams,Link} from 'react-router-dom'
+import { Container, Spinner } from 'react-bootstrap';
 import axiosInstance from '../../axiosInstance';
 
 function UserPublicProfile() {
@@ -7,48 +8,60 @@ function UserPublicProfile() {
     const username = params.username;
     const [userDetails,setUserDetails] = useState("");
     const [errorUser,setErrorUser] = useState("");
+    const [isLoading,setLoading]=useState(true);
 
     useEffect(()=>{
         axiosInstance.get(`/api/user/profile/${username}`)
         .then(response=>{
             setUserDetails(response.data)
             
+            setLoading(false);
         })
         .catch((error)=>{
             
             setErrorUser(error.response.data);
+            setLoading(false);
         })
         
-    },[setUserDetails,setErrorUser,username])
+    },[setUserDetails,setErrorUser,username,setLoading])
 
-    if(errorUser){
+    if(isLoading){
         return(
-            <div className="m-5 ">
-
-                {errorUser}
+            <div className="loading-spinner-style">
+                <Spinner animation="border"  role="status" />
             </div>
         )
     }
+
     else{
     return (
-        <div className="mt-3 text-center">
-            <p>@{userDetails.username}</p>
-            <h3>{userDetails.name}</h3>
-            <p>{userDetails.gender}</p>
+        
+        <Container className="mt-3 text-center">
+            {errorUser ?
+                <div class="alert alert-warning" role="alert">
+                    {errorUser}
+                    
+                </div>
+                :<div>
+                    <p>@{userDetails.username}</p>
+                    <h3>{userDetails.name}</h3>
+                    <p>{userDetails.gender}</p>
 
-            {
-                userDetails.posts && userDetails.posts.map((eachItem)=>{
-                    return (<Post
-                        key={eachItem._id} 
-                        _id={eachItem._id}
-                        post={eachItem.post}
-                        username={eachItem.username}
-                        posted_on={eachItem.posted_on}
-                    />
-                    )
-                })
+                    {
+                        userDetails.posts && userDetails.posts.map((eachItem)=>{
+                            return (<Post
+                                key={eachItem._id} 
+                                _id={eachItem._id}
+                                post={eachItem.post}
+                                username={eachItem.username}
+                                posted_on={eachItem.posted_on}
+                            />
+                            )
+                        })
+                    }
+                </div>
             }
-        </div>
+        </Container>
     )
 }
 }

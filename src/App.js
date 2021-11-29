@@ -7,8 +7,9 @@ import Posts from "./components/Posts/Posts";
 import Navbar from './components/Navbar/Navbar';
 
 
+
 import axiosInstance from './axiosInstance';
-import {Spinner} from 'react-bootstrap';
+import {Spinner,Container,Row,Col} from 'react-bootstrap';
 import AllUser from './components/User/AllUser';
 import UserPublicProfile from './components/User/UserPublicProfile';
 
@@ -41,18 +42,36 @@ function App() {
   }
   else{
     return (
-      <Router>
-        <Navbar userDetails={userDetails} setUserLogged={setUserLogged} />
-        <Routes>
-            
-            <Route path="/register" element={<Register  />}/>
-            <Route path="/login" element={<Login userDetails={userDetails} setUserLogged={setUserLogged} />}/>
-            <Route path="/" element={<Homepage userDetails={userDetails}/>} />
-            <Route path="/posts/:postId" element={<Posts />} />
-            <Route path="/users/" element={<AllUser />} />
-            <Route path="/user/:username" element={<UserPublicProfile />} />
-        </Routes>
-      </Router>
+      <div>
+        
+        
+          <Router>
+          <Navbar userDetails={userDetails} setUserLogged={setUserLogged} />
+            <Container>
+              <Row>
+                <Col className="" md={3}>
+                </Col>
+                <Col xs={12} md={6}>
+                  <Routes>
+                    
+                    <Route path="/register" element={<Register  />}/>
+                    <Route path="/login" element={<Login userDetails={userDetails} setUserLogged={setUserLogged} />}/>
+                    <Route path="/" element={<Homepage userDetails={userDetails}/>} />
+                    <Route path="/posts/:postId" element={<Posts />} />
+                    <Route path="/users/" element={<AllUser />} />
+                    <Route path="/user/:username" element={<UserPublicProfile />} />
+                </Routes>
+                </Col>
+                <Col className="" md={3}>
+
+                </Col>
+
+              
+              </Row>
+            </Container>
+          </Router>
+
+      </div>
     );
   }
 }

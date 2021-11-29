@@ -12,3 +12,30 @@
     background-color: transparent;
     border: 0px;
 }
+.post-field-input{
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+textarea{
+    resize: none;
+}
+.homepage-container{
+    border: 1px lightgrey solid;
+}
+.input-field-text-area{
+    border:0;
+}
+.homepage-image-box{
+    margin-top: 14px;
+    border: 1px rgb(114, 114, 252) solid;
+    padding: 6px 6px;
+    height:50px;
+    width: 50px;
+
+    background-color: rgb(185, 185, 253);
+    color: white;
+    font-size: 22px;
+    border-radius: 50%;
+}

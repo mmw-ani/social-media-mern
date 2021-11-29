@@ -1,54 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Acme&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700;800&display=swap');
+*{
+    font-family: Dosis;
+    font-weight: 600;
+    margin: 0px;
+}
 .post-by-id-container{
     position: relative;
-    border: 1px solid #efefef;
-    border-radius: 25px;
+    
     font-family: Poppins;
-    border-top: 40px solid lightgray;
-    padding:12px 15px;
-    margin:20px auto 50px;
+    margin: -13px 0;
+    padding:0 16px;
+
     max-width: 450px;
-    width: 70%;
-    box-shadow: 0px 3px 8px 3px lightgrey;
+    width: 100%;
 }
 
 .user-box{
 
-    position: absolute;
     text-decoration: none;
-    top:-30px;
-    left:24px;
+    
     font-size: 15px;
-    font-family: Poppins;
     font-weight: bold;
-    color:#3d3d3d;
+    color:rgb(153, 152, 152);
 }
 .user-box:hover{
     text-decoration: none;
     color:#646363;
 }
 .post-content{
-    margin:30px 14px 50px;
+    margin:30px 14px 20px;
     font-size: 32px;
-    font-family: Acme;
 
 }
 .post-posted-on{
-    position: absolute;
-    bottom: 0px;
-    left: 60%;
+    
     font-size: 14px;
-    font-weight: 600;
     color:#c5c5c5;
 }
 .post-content-with-link{
     text-decoration: none;
-    margin:12px;
+    margin:8px;
     font-size: 24px;
-    color:grey;
-    font-family: Poppins;
-
+    color:black;
 }
 .post-content-with-link:hover{
     text-decoration: none;
