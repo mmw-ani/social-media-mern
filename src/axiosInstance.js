@@ -11,7 +11,7 @@ const axiosInstance =axios.create({
     withCredentials:true
 });
 
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 axiosInstance.interceptors.response.use(
     response => (response), 
