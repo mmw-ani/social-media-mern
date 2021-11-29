@@ -1,15 +1,13 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
-import axiosInstance from '../../axiosInstance'
-
+import Cookie from 'universal-cookie' 
 function Navbar(props) {
     
     const userDetails = props.userDetails
     function logout(){
-        axiosInstance.get('/api/logout')
-        .then(response=>{
-        })
+        const cookie = new Cookie();
+        cookie.remove('jwt');
         props.setUserLogged("")
     }
     return (

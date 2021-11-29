@@ -8,15 +8,16 @@ import Cookies from 'universal-cookie';
 
 
 function Login(props) {
+    const cookies = new Cookies();
     const [password,setPassword]= useState('');
     const [username,setUsername]= useState('');
     const [successResponse,setSuccessResponse] = useState('')
     const [validityError,setValidityError]=useState('');
-    const cookies = new Cookies();
+    
 
 
     const navigate = useNavigate()
-    async function handleSubmit (event){
+    const  handleSubmit = async (event)=>{
         setSuccessResponse("");
         setValidityError("");
         event.preventDefault();
@@ -25,6 +26,7 @@ function Login(props) {
             password
         }
         axiosInstance.post('/api/login/',paramters).then((response)=>{
+            console.log(response)
             const token = response.data.jwt;
             cookies.set('jwt',token,{path:'/'});
             
@@ -36,8 +38,9 @@ function Login(props) {
             navigate('/')         
             setValidityError('');
         }).catch((error)=>{
-            
-            setValidityError(error.response);
+            console.log(error.response)
+
+            setValidityError(error.response.data);
                 
         })
     };

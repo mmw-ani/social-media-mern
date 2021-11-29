@@ -30,7 +30,7 @@ function App() {
       });
       setLoading(false);
 
-  },[userDetails])
+  },[setUserDetails,setLoading])
   if(isLoading){
       return (
         <div className="loading-spinner-style">
