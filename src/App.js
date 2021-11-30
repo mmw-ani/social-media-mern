@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import {BrowserRouter as Router, Routes,Route} from 'react-router-dom'
+import {BrowserRouter as Router, Routes,Route, Link} from 'react-router-dom'
 import Homepage from "./components/Homepage/Homepage";
 import Posts from "./components/Posts/Posts";
 import Navbar from './components/Navbar/Navbar';
@@ -49,9 +49,10 @@ function App() {
           <Navbar userDetails={userDetails} setUserLogged={setUserLogged} />
             <Container>
               <Row>
-                <Col className="" md={3}>
+                <Col className="" lg={3}>
+                  
                 </Col>
-                <Col xs={12} md={6}>
+                <Col xs={12} lg={6} className="">
                   <Routes>
                     
                     <Route path="/register" element={<Register  />}/>
@@ -62,8 +63,9 @@ function App() {
                     <Route path="/user/:username" element={<UserPublicProfile />} />
                 </Routes>
                 </Col>
-                <Col className="" md={3}>
-
+                <Col className="text-center d-none d-lg-block" lg={3}>
+                  <AllUser inMainScreen={true} />
+                  <Link to="/users" className="text-center m-3" >See All Users</Link>
                 </Col>
 
               

@@ -48,3 +48,25 @@
     margin:14px;
     color:black;
 }
+
+.post-button-container{
+    border:0px;
+    background-color: transparent;
+    font-size: 20px;
+    margin:0px auto;
+}
+.likedbutton{
+    color:red;
+}
+.post-extra-details{
+    margin-left: 8px;
+}
+.post-buttons{
+    margin-bottom: 5px;
+}
+.comment-box{
+    margin-top: 12px;
+    border: 1px lightgrey solid;
+    padding: 5px 16px;
+    border-radius: 20px; 
+}

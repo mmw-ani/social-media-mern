@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import {useParams,Link} from 'react-router-dom'
-import { Container, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import axiosInstance from '../../axiosInstance';
 
 function UserPublicProfile() {
@@ -36,7 +36,7 @@ function UserPublicProfile() {
     else{
     return (
         
-        <Container className="mt-3 text-center">
+        <div className="mt-3 text-center">
             {errorUser ?
                 <div class="alert alert-warning" role="alert">
                     {errorUser}
@@ -61,7 +61,7 @@ function UserPublicProfile() {
                     }
                 </div>
             }
-        </Container>
+        </div>
     )
 }
 }

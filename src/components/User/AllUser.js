@@ -1,20 +1,29 @@
 import React, { useState,useEffect } from 'react'
 import axiosInstance from '../../axiosInstance';
 import {Link} from 'react-router-dom'
+import {Col,Row} from 'react-bootstrap'
 
-function AllUser() {
+function AllUser(props) {
     const [users,setUsers] = useState([]);
 
     useEffect(()=>{
         axiosInstance('/api/users/')
+        
         .then(response=>{
-            setUsers(response.data);
+            if(props.inMainScreen){
+                const fiveUsers = response.data.splice(0,5);
+
+                setUsers(fiveUsers);
+            }
+            else{
+                setUsers(response.data);
+            }
         })
-    },[])
+    },[setUsers,props])
 
     return (
-        <div className="text-center">
-            <h1>Users</h1> 
+        <div className="text-center mt-3 mb-3">
+            <h1>{props.inMainScreen?"New Users": "Users"}</h1> 
             {users.map(eachUser=>{
                 return (
                     <UserCard 
@@ -31,11 +40,23 @@ function AllUser() {
 }
 
 function UserCard(props){
+    
+    let nameOfUser = props.name.split(" ");
+    nameOfUser = nameOfUser[0][0]+nameOfUser[1][0];
+    nameOfUser = nameOfUser.toUpperCase();
+    
     return(
-        <div className="shadow col-4 mx-auto mt-4 p-3">
-            <p className="mb-1">{props.name}</p>
-            <Link to={`/user/${props.username}`}>@{props.username}</Link>
-        </div>
+        <Row className="shadow mx-auto mt-4 p-3">
+            <Col xs={2} className="text-center">
+                <p className="homepage-image-box">
+                    {nameOfUser}
+                </p>
+            </Col>
+            <Col className="my-auto">
+                <p className="mb-0">{props.name}</p>
+                <Link to={`/user/${props.username}`}>@{props.username}</Link>
+            </Col>
+        </Row>
     )
 }
 

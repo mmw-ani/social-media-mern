@@ -15,8 +15,12 @@ export default class Homepage extends Component {
     componentDidMount(){
         this._isMounted=true;
         if(this.props.userDetails){
-        this.getAllPost();
-    }
+            this.getAllPost();
+        }
+        
+        
+        
+        
     
     }
     getAllPost = ()=>{
@@ -52,6 +56,9 @@ export default class Homepage extends Component {
             this.setState({createPostSuccess:response.data})
             this.getAllPost();
             this.setState({createPost:""})
+            setTimeout(()=>{
+                this.setState({createPostSuccess:"",createPostError:""})
+            },5000)
         })
         .catch((error)=>{
             console.log(error);
@@ -62,11 +69,13 @@ export default class Homepage extends Component {
         }
     }
     
-
+    likedButtonTrigger= ()=>{
+        this.getAllPost()
+    }
     render() {
+        
         const posts = this.state.posts;     
         const result = posts.map((eachPost)=>{
-            
             return (
                     <PostContainer 
                         key={eachPost._id}
@@ -74,7 +83,12 @@ export default class Homepage extends Component {
                         postId = {eachPost._id}
                         post={eachPost.post}
                         posted_on={eachPost.posted_on}
+                        isLiked = {eachPost.isLiked}
                         username={eachPost.username}
+                        likedButtonTrigger={this.likedButtonTrigger}
+                        likedBy = {eachPost.likes.length}
+                        commentedBy = {eachPost.comments.length}
+                        comments = {eachPost.comments.splice(0,2)}
                     />
             )
         })
@@ -83,16 +97,17 @@ export default class Homepage extends Component {
         if(userIsLoggedIn){
             nameOfUser = this.props.userDetails.name.split(" ");
             nameOfUser = nameOfUser[0][0]+nameOfUser[1][0];
+            nameOfUser = nameOfUser.toUpperCase();
         }
         return (
             
-                <div className="">
+                <div className="homepage-container">
                     {!userIsLoggedIn&&
                         <Navigate to="/login" replace={true} /> 
                     }
                     
 
-                        <div xs={6} className="homepage-container px-2 pt-1">
+                        <div className="px-2 pt-1">
                             <Row>
                                 <Col xs={2} className="text-center">
                                     <p className="homepage-image-box">

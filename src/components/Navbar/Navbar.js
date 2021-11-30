@@ -20,10 +20,10 @@ function Navbar(props) {
                 <div className="navbar-nav ml-auto">
                 
                 {userDetails ?<Button className="nav-link logout-button" onClick={logout}>Logout</Button>
-                    :<>
+                    :<div>
                         <NavLink className="nav-link" to="/login">Login</NavLink>
                         <NavLink className="nav-link" to="/register">Register</NavLink>
-                    </>
+                    </div>
                 }
                 
                 

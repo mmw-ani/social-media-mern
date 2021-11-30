@@ -1,7 +1,7 @@
 import React, { Component} from 'react'
 import axiosInstance from '../../axiosInstance'
 import { useParams} from 'react-router-dom'
-import {Container,Row, Col} from 'react-bootstrap'
+import {Row, Col} from 'react-bootstrap'
 import {Navigate } from 'react-router'
 import "./index.css"
 import PostContainer from './PostContainer'
@@ -14,11 +14,11 @@ class PostComponent extends Component {
         editable:false,
         currentUsername:"",
         redirect:false,
-        likes:"",
-        comments:"",
+        likes:[],
+        comments:[],
+
     }
-    
-    componentDidMount(){
+    getPostDetails = ()=>{
         axiosInstance.get(`/api/post/${this.props.postId}`)
         .then((response)=>{
             this.setState({currentUsername:response.data.currentUsername})
@@ -30,12 +30,15 @@ class PostComponent extends Component {
                 currentUserId:response.data.loggedIn,
                 editable:checking,
                 likes:response.data.likes,
-                comments:response.data.comments
+                comments:response.data.comments,
             })
         })
         .catch((e)=>{
             console.log(e);
         })
+    }
+    componentDidMount(){
+        this.getPostDetails()
         
     }
 
@@ -74,7 +77,7 @@ class PostComponent extends Component {
     }
     render() {
         return (
-            <Container className="">
+            <div className="mt-5">
                 <Row>
                 <Col>
                 {this.state.redirect&& 
@@ -84,7 +87,12 @@ class PostComponent extends Component {
                     post={this.state.post.post}
                     username={this.state.post.username}
                     posted_on={this.state.post.posted_on}
-                    
+                    isLiked = {this.state.post.isLiked}
+                    postId = {this.state.post._id}
+                    likedButtonTrigger={this.getPostDetails}
+                    likedBy = {this.state.likes.length}
+                    commentedBy = {this.state.comments.length}
+                    comments = {this.state.comments}
                 />
                 </Col>
                 {
@@ -106,7 +114,7 @@ class PostComponent extends Component {
                 }
                 </Row>
                 
-            </Container>
+            </div>
         )
     }
 }
