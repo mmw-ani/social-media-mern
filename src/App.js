@@ -23,12 +23,15 @@ function App() {
     setUserDetails(response)
   }
 
-  const getUserDetails = async ()=>{
-    await axiosInstance.get("/api/user/")
+  const getUserDetails = ()=>{
+    axiosInstance.get("/api/user/")
       .then((response)=>{
+        setLoading(false);
           setUserDetails(response.data);
-      });
-      setLoading(false);
+      })
+      .catch((e)=>{
+        setLoading(false)
+      })
   }
   useEffect(()=>{
     getUserDetails()
