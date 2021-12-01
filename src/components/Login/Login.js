@@ -3,19 +3,14 @@ import {Button, Container} from 'react-bootstrap'
 import axiosInstance from "../../axiosInstance";
 import { useNavigate,Navigate } from "react-router";
 import "./index.css"
-import Cookies from 'universal-cookie';
-
-
 
 function Login(props) {
-    const cookies = new Cookies();
+    
     const [password,setPassword]= useState('');
     const [username,setUsername]= useState('');
     const [successResponse,setSuccessResponse] = useState('')
     const [validityError,setValidityError]=useState([]);
     
-
-
     const navigate = useNavigate()
     const  handleSubmit = async (event)=>{
         event.preventDefault();
@@ -29,14 +24,11 @@ function Login(props) {
         }
         axiosInstance.post('/api/login/',paramters).then((response)=>{
             const token = response.data.jwt;
-            cookies.set('jwt',token,{path:'/'});
+            localStorage.setItem('jwt',token)
             
-            axiosInstance.get("/api/user/")
-            .then((response)=>{
-                props.setUserLogged(response.data);
-            });
-
-            navigate('/')         
+            props.getUserDetails();
+            navigate('/')       
+            setSuccessResponse('Logged In')  
             setValidityError('');
         }).catch((error)=>{
             

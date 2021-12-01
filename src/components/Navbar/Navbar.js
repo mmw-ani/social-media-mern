@@ -1,14 +1,11 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
-import Cookie from 'universal-cookie' 
+
 function Navbar(props) {
-    
     const userDetails = props.userDetails
-    function logout(){
-        const cookie = new Cookie();
-        cookie.set('jwt',"",{path:'/'});
-        localStorage.removeItem('get');        
+    const logout=()=>{
+        localStorage.removeItem('jwt','');
         props.setUserLogged("")
     }
     return (
@@ -20,7 +17,7 @@ function Navbar(props) {
                 <div className="navbar-nav ml-auto">
                 
                 {userDetails ?<Button className="nav-link logout-button" onClick={logout}>Logout</Button>
-                    :<div>
+                    :<div className="d-flex ">
                         <NavLink className="nav-link" to="/login">Login</NavLink>
                         <NavLink className="nav-link" to="/register">Register</NavLink>
                     </div>

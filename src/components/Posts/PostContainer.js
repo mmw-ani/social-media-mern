@@ -45,7 +45,7 @@ function PostContainer(props) {
     }
     return (
         <div>
-            <div className="post-by-id-container mb-3">
+            <div className="post-by-id-container mb-3" >
                 
                 <Link to={`/user/${props.username}`} className="user-box mr-2" >@<span>{props.username}</span></Link>
                 	
@@ -84,7 +84,7 @@ function PostContainer(props) {
                 <div className="mt-2">
                     {props.comments.map((item)=>{
                         return(
-                            <div className="comment-box">
+                            <div className="comment-box" key={`comment-${item._id}`}>
                                 <Link to={`/user/${item.username}`} className="user-box mr-2" >@<span>{item.username}</span></Link>
                                 &bull;<p className="mb-0 ml-2 post-posted-on d-inline">{getDate(item.commented_at)}</p>
                                     

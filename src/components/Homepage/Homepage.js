@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import axiosInstance from "../../axiosInstance";
-import {Navigate} from 'react-router-dom'
-import { Row,Col } from 'react-bootstrap';
+import {Navigate,Link} from 'react-router-dom'
+import { Row,Col,Container } from 'react-bootstrap';
 import "./index.css"
 import PostContainer from '../Posts/PostContainer';
+import AllUser from '../User/AllUser';
+
 export default class Homepage extends Component {
     _isMounted = false;
     state={
@@ -101,13 +103,14 @@ export default class Homepage extends Component {
         }
         return (
             
-                <div className="homepage-container">
+                <Container className="">
                     {!userIsLoggedIn&&
                         <Navigate to="/login" replace={true} /> 
                     }
                     
-
-                        <div className="px-2 pt-1">
+                    <Row>
+                        
+                        <Col xs={12} lg={9} className="px-2 pt-1 homepage-container">
                             <Row>
                                 <Col xs={2} className="text-center">
                                     <p className="homepage-image-box">
@@ -149,8 +152,15 @@ export default class Homepage extends Component {
                         
                         result
                     }
-                    </div>
-                </div>
+                    </Col>
+                    <Col className="text-center d-none d-lg-block" lg={3}>
+                        <AllUser inMainScreen={true} />
+                        <Link to="/users" className="text-center m-3" >See All Users</Link>
+                    </Col>
+
+                    </Row>
+
+                </Container>
             
         )
     }

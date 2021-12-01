@@ -6,28 +6,30 @@ import {Col,Row} from 'react-bootstrap'
 function AllUser(props) {
     const [users,setUsers] = useState([]);
 
+    
     useEffect(()=>{
-        axiosInstance('/api/users/')
-        
-        .then(response=>{
+        const getUsers = async ()=>{
+            const response = await axiosInstance('/api/users/')
+            
+            
             if(props.inMainScreen){
-                const fiveUsers = response.data.splice(0,5);
-
-                setUsers(fiveUsers);
+                
+                setUsers(response.data.splice(0,5));
             }
             else{
                 setUsers(response.data);
             }
-        })
-    },[setUsers,props])
+        }
+        getUsers()  
+    },[setUsers,props.inMainScreen])
 
     return (
-        <div className="text-center mt-3 mb-3">
-            <h1>{props.inMainScreen?"New Users": "Users"}</h1> 
+        <div className="text-center mt-3 mb-3 p-2">
+            <h3>{props.inMainScreen?"New Users": "Users"}</h3> 
             {users.map(eachUser=>{
                 return (
                     <UserCard 
-                        key={eachUser.user_id}
+                        key={`usercard-${eachUser.username}`}
                         id={eachUser.user_id} 
                         name={eachUser.name} 
                         username={eachUser.username}

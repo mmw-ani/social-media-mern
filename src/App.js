@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import {BrowserRouter as Router, Routes,Route, Link} from 'react-router-dom'
+import {BrowserRouter as Router, Routes,Route} from 'react-router-dom'
 import Homepage from "./components/Homepage/Homepage";
 import Posts from "./components/Posts/Posts";
 import Navbar from './components/Navbar/Navbar';
@@ -9,7 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 
 
 import axiosInstance from './axiosInstance';
-import {Spinner,Container,Row,Col} from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
 import AllUser from './components/User/AllUser';
 import UserPublicProfile from './components/User/UserPublicProfile';
 
@@ -23,15 +23,17 @@ function App() {
     setUserDetails(response)
   }
 
-  useEffect(()=>{
-      
-      axiosInstance.get("/api/user/")
+  const getUserDetails = async ()=>{
+    await axiosInstance.get("/api/user/")
       .then((response)=>{
           setUserDetails(response.data);
       });
       setLoading(false);
-
+  }
+  useEffect(()=>{
+    getUserDetails()
   },[setUserDetails,setLoading])
+
   if(isLoading){
       return (
         <div className="loading-spinner-style">
@@ -47,30 +49,17 @@ function App() {
         
           <Router>
           <Navbar userDetails={userDetails} setUserLogged={setUserLogged} />
-            <Container>
-              <Row>
-                <Col className="" lg={3}>
-                  
-                </Col>
-                <Col xs={12} lg={6} className="">
+            
                   <Routes>
                     
                     <Route path="/register" element={<Register  />}/>
-                    <Route path="/login" element={<Login userDetails={userDetails} setUserLogged={setUserLogged} />}/>
+                    <Route path="/login" element={<Login userDetails={userDetails} getUserDetails={getUserDetails} />}/>
                     <Route path="/" element={<Homepage userDetails={userDetails}/>} />
                     <Route path="/posts/:postId" element={<Posts />} />
                     <Route path="/users/" element={<AllUser />} />
                     <Route path="/user/:username" element={<UserPublicProfile />} />
                 </Routes>
-                </Col>
-                <Col className="text-center d-none d-lg-block" lg={3}>
-                  <AllUser inMainScreen={true} />
-                  <Link to="/users" className="text-center m-3" >See All Users</Link>
-                </Col>
-
-              
-              </Row>
-            </Container>
+                
           </Router>
 
       </div>

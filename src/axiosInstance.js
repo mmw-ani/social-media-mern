@@ -1,8 +1,5 @@
 import axios from 'axios'
-import Cookies from 'universal-cookie'
-
-const cookie = new Cookies()
-const token = cookie.get('jwt')
+const token = localStorage.getItem('jwt')
 const URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
 
     
