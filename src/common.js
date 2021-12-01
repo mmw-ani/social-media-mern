@@ -14,7 +14,7 @@ function getDate(date){
     month[11] = "Dec";
     
     date =  new Date(date);
-    const res = date.getDate()+"-"+month[date.getMonth()]+"-"+date.getFullYear();
+    const res = date.getDate()+"-"+month[date.getMonth()]+"-"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
     return res;
 }
 

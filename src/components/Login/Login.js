@@ -27,11 +27,12 @@ function Login(props) {
             localStorage.setItem('jwt',token)
             
             props.getUserDetails();
-            navigate('/')       
+            
+            navigate('/')
+            window.location.reload();       
             setSuccessResponse('Logged In')  
             setValidityError('');
         }).catch((error)=>{
-            
             setValidityError(error.response.data);
                 
         })}

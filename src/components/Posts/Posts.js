@@ -1,7 +1,7 @@
 import React, { Component} from 'react'
 import axiosInstance from '../../axiosInstance'
 import { useParams} from 'react-router-dom'
-import {Row, Col} from 'react-bootstrap'
+import {Row, Col, Container,Dropdown} from 'react-bootstrap'
 import {Navigate } from 'react-router'
 import "./index.css"
 import PostContainer from './PostContainer'
@@ -16,6 +16,7 @@ class PostComponent extends Component {
         redirect:false,
         likes:[],
         comments:[],
+        editFormOpen:false,
 
     }
     getPostDetails = ()=>{
@@ -41,7 +42,6 @@ class PostComponent extends Component {
         this.getPostDetails()
         
     }
-
     handleSubmitEditForm=(e)=>{
         e.preventDefault();
         const body = {
@@ -54,7 +54,7 @@ class PostComponent extends Component {
                 post:this.state.editPost
             })
             this.setState({editable:true})
-            this.setState({post:newArr})
+            this.setState({post:newArr,editFormOpen:false})
         })
         .catch((error)=>{
             this.setState({editable:false})
@@ -75,46 +75,69 @@ class PostComponent extends Component {
             console.log("Error: "+e);
         });
     }
+    handleOpenEditForm = ()=>{
+        this.setState({editFormOpen:!this.state.editFormOpen})
+    }
     render() {
         return (
-            <div className="mt-5">
+            <Container className="mt-5">
                 <Row>
-                <Col>
-                {this.state.redirect&& 
-                    <Navigate to="/" replace={true} />
-                }
-                <PostContainer
-                    post={this.state.post.post}
-                    username={this.state.post.username}
-                    posted_on={this.state.post.posted_on}
-                    isLiked = {this.state.post.isLiked}
-                    postId = {this.state.post._id}
-                    likedButtonTrigger={this.getPostDetails}
-                    likedBy = {this.state.likes.length}
-                    commentedBy = {this.state.comments.length}
-                    comments = {this.state.comments}
-                />
-                </Col>
+                <Col xs={12}>
                 {
-                this.state.editable&& <div><form onSubmit={this.handleSubmitEditForm}>
-                    <textarea
-                        rows={5}
-                        className="form-control w-75 ml-auto mr-auto"
-                        placeholder="Write Your Post here"
-                        onChange={(e)=>this.setState({editPost:e.target.value})}
-                        value={this.state.editPost}
-                    />
-                    
-                    <br />
-                    <button className="btn btn-dark" type="submit">Submit</button>
-                </form>
-                
-                <button className="btn btn-warning text-white mt-2" onClick={this.handleDeleteButton}>Delete</button>
-                </div>
+                    this.state.editable && 
+                    <div className="dropdown-post-container">
+                    <Dropdown >
+                        <Dropdown.Toggle variant="" id="dropdown-basic" className="dropdown-post-button">
+                            
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={this.handleOpenEditForm}>Edit</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleDeleteButton}>Delete</Dropdown.Item>
+                        </Dropdown.Menu>
+                            
+                    </Dropdown>
+                    {   this.state.editFormOpen&&
+                                <div className="mb-3 text-center">
+                                    <form onSubmit={this.handleSubmitEditForm}>
+                                        <textarea
+                                            rows={5}
+                                            className="form-control ml-auto mr-auto"
+                                            placeholder="Write Your Post here"
+                                            onChange={(e)=>this.setState({editPost:e.target.value})}
+                                            value={this.state.editPost}
+                                        />
+                                    
+                                        <br />
+                                        <button className="btn btn-dark" type="submit">Update</button>
+                                    </form>
+                                
+                                    
+                                </div>
+                    }
+                    </div>
                 }
+                </Col>
+                <Col xs={12}>
+                    {this.state.redirect&& 
+                        <Navigate to="/" replace={true} />
+                    }
+                    <PostContainer
+                        post={this.state.post.post}
+                        username={this.state.post.username}
+                        posted_on={this.state.post.posted_on}
+                        isLiked = {this.state.post.isLiked}
+                        postId = {this.state.post._id}
+                        likedButtonTrigger={this.getPostDetails}
+                        likedBy = {this.state.likes.length}
+                        commentedBy = {this.state.comments.length}
+                        comments = {this.state.comments}
+                    />
+                </Col>
+                
                 </Row>
                 
-            </div>
+            </Container>
         )
     }
 }
@@ -129,6 +152,4 @@ function Posts() {
 }
 
 
-
-module.PostContainer = PostContainer;
 export default Posts

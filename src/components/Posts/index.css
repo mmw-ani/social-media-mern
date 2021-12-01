@@ -53,7 +53,15 @@
     border:0px;
     background-color: transparent;
     font-size: 20px;
-    margin:0px 32px;
+    margin:0 0 0 32px;
+}
+.post-like-link-container{
+    font-size: 20px;
+    margin: 0px;
+    color:inherit;
+}
+.post-like-link-container:hover{
+    color:inherit;
 }
 .likedbutton{
     color:red;
@@ -69,4 +77,18 @@
     border: 1px lightgrey solid;
     padding: 5px 16px;
     border-radius: 20px; 
+}
+.post-comment-button{
+    border: 0px;
+    background-color: transparent;
+    margin-top:3px;
+}
+
+.dropdown-post-container{
+    text-align: right;
+    position: relative;
+}
+.dropdown-post-button{
+    position: relative;
+    margin-bottom: 12px;
 }

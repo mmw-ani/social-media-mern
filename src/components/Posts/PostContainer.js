@@ -34,6 +34,7 @@ function PostContainer(props) {
     }
     const handleCommentClickButton = async (e) => {
         e.preventDefault();
+        if(comment!==""){
         const parameter = {
             comment:comment
         }
@@ -42,6 +43,7 @@ function PostContainer(props) {
         props.likedButtonTrigger();
 
         setComment("");
+        }
     }
     return (
         <div>
@@ -55,8 +57,9 @@ function PostContainer(props) {
                 <div className="d-flex flex-row">
                     <button onClick={handleLikeClick} className="post-button-container">
                         {isLiked?<AiFillHeart className="likedbutton post-buttons" /> : <AiOutlineHeart className="post-buttons" />}
-                        <p className="post-extra-details d-inline">{props.likedBy}</p>
+                        
                     </button>
+                    <Link to={`/posts/${props.postId}`} className="post-like-link-container">{props.likedBy}</Link>
                     <button className="post-button-container">
                         <FaComments className="post-buttons" />
                         <p className="post-extra-details d-inline">{props.commentedBy}</p>
@@ -64,8 +67,8 @@ function PostContainer(props) {
                 </div>
                 
                 <form onSubmit={handleCommentClickButton}>
-                    <Row className="mt-2 ml-5">
-                        <Col xs={7}>
+                    <Row className="mt-2 ml-2">
+                        <Col xs={9} className="text-right" >
                             <div className="post-field-input mt-2">
                                 <textarea
                                     rows={1}
@@ -76,12 +79,12 @@ function PostContainer(props) {
                                 />
                             </div>
                         </Col>
-                        <Col xs={4} className="my-auto text-right">
-                            <button className="btn btn-dark " type="submit">Comment</button>
+                        <Col xs={3} className="mt-2 text-left">
+                            <button className="text-primary post-comment-button py-1" type="submit">Comment</button>
                         </Col>
                     </Row>
                 </form>
-                <div className="mt-2">
+                <div className="mt-3">
                     {props.comments.map((item)=>{
                         return(
                             <div className="comment-box" key={`comment-${item._id}`}>
@@ -89,7 +92,6 @@ function PostContainer(props) {
                                 &bull;<p className="mb-0 ml-2 post-posted-on d-inline">{getDate(item.commented_at)}</p>
                                     
                                 <p className="mb-0">
-                                    
                                     {item.comment}
                                 </p>
                             </div>
