@@ -19,12 +19,14 @@ function PostContainer(props) {
     
     const handleLikeClick = async (e) =>{
         if(isLiked){
-            await axiosInstance.get(`/api/post/${props.postId}/unlike`).catch((e)=>console.log(e));
             setLikedButton(false)
+            await axiosInstance.get(`/api/post/${props.postId}/unlike`).catch((e)=>console.log(e));
+            
         }
         else{
-            await axiosInstance.get(`/api/post/${props.postId}/like`).catch((e)=>console.log(e));
             setLikedButton(true)
+            await axiosInstance.get(`/api/post/${props.postId}/like`).catch((e)=>console.log(e));
+            
         }
         props.likedButtonTrigger()
     }
@@ -59,7 +61,7 @@ function PostContainer(props) {
                         {isLiked?<AiFillHeart className="likedbutton post-buttons" /> : <AiOutlineHeart className="post-buttons" />}
                         
                     </button>
-                    <Link to={`/posts/${props.postId}`} className="post-like-link-container">{props.likedBy}</Link>
+                    <Link to={`/posts/${props.postId}/likes`} className="post-like-link-container">{props.likedBy}</Link>
                     <button className="post-button-container">
                         <FaComments className="post-buttons" />
                         <p className="post-extra-details d-inline">{props.commentedBy}</p>

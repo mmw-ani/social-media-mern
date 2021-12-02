@@ -1,11 +1,12 @@
 import React,{useEffect,useState} from 'react'
 import {useParams,Link} from 'react-router-dom'
-import { Spinner } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import axiosInstance from '../../axiosInstance';
+import { getDate } from '../../common';
 
-function UserPublicProfile() {
+function UserPublicProfile(props) {
     const params = useParams();
-    const username = params.username;
+    const username = props.username||params.username;
     const [userDetails,setUserDetails] = useState("");
     const [errorUser,setErrorUser] = useState("");
     const [isLoading,setLoading]=useState(true);
@@ -14,7 +15,6 @@ function UserPublicProfile() {
         axiosInstance.get(`/api/user/profile/${username}`)
         .then(response=>{
             setUserDetails(response.data)
-            
             setLoading(false);
         })
         .catch((error)=>{
@@ -36,7 +36,7 @@ function UserPublicProfile() {
     else{
     return (
         
-        <div className="mt-3 text-center">
+        <Container className="mt-3 text-center">
             {errorUser ?
                 <div class="alert alert-warning" role="alert">
                     {errorUser}
@@ -46,7 +46,14 @@ function UserPublicProfile() {
                     <p>@{userDetails.username}</p>
                     <h3>{userDetails.name}</h3>
                     <p>{userDetails.gender}</p>
-
+                    <p className="d-inline">
+                        {userDetails.followers.length} <Link to={`/user/${username}/followers`}>Followers</Link>
+                        
+                    </p>
+                    <p className="d-inline ml-2">
+                        {userDetails.following.length} <Link to={`/user/${username}/following`}>Following</Link>
+                        
+                    </p>
                     {
                         userDetails.posts && userDetails.posts.map((eachItem)=>{
                             return (<Post
@@ -54,14 +61,14 @@ function UserPublicProfile() {
                                 _id={eachItem._id}
                                 post={eachItem.post}
                                 username={eachItem.username}
-                                posted_on={eachItem.posted_on}
+                                posted_on={getDate(eachItem.posted_on)}
                             />
                             )
                         })
                     }
                 </div>
             }
-        </div>
+        </Container>
     )
 }
 }

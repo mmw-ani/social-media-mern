@@ -12,6 +12,9 @@
     background-color: transparent;
     border: 0px;
 }
+.logout-button:focus{
+    background-color: inherit;
+}
 .post-field-input{
     width: 100%;
     margin-left: auto;

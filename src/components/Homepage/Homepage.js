@@ -4,7 +4,7 @@ import {Navigate,Link} from 'react-router-dom'
 import { Row,Col,Container } from 'react-bootstrap';
 import "./index.css"
 import PostContainer from '../Posts/PostContainer';
-import AllUser from '../User/AllUser';
+import {AllUser} from '../User/AllUser';
 
 export default class Homepage extends Component {
     _isMounted = false;

@@ -58,6 +58,8 @@
 .post-like-link-container{
     font-size: 20px;
     margin: 0px;
+    margin-left: 2px;
+    text-decoration:underline;
     color:inherit;
 }
 .post-like-link-container:hover{

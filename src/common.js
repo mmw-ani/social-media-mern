@@ -18,4 +18,4 @@ function getDate(date){
     return res;
 }
 
-exports.getDate = getDate;
+export {getDate}
