@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance'
 import {UserCard} from '../User/AllUser';
 
-function PostLikes() {
+function PostLikes(props) {
     const params = useParams();
     const postId = params.postId ;
     const [likedBy,setLikes] = useState([]);
@@ -24,7 +24,21 @@ function PostLikes() {
             <p className="text-left"><Link  to={`/posts/${postId}`}>Back</Link></p>
             {
                 likedBy.map((like)=>{
-                    return <UserCard name={like.name} username={like.username} key={`${postId}-likes-${like.username}`} />
+                    let sameUser = false;
+                            if(following.username === props.username){ 
+                                sameUser=true;
+                            }
+                            let isFollowing=false;
+                            if(props.following.find(item=>item.username===following.username)){
+                                isFollowing=true;
+                            }
+
+                    return <UserCard 
+                        sameUser={sameUser}
+                        isFollowing={isFollowing}
+                        name={like.name} 
+                        username={like.username} 
+                        key={`${postId}-likes-${like.username}`} />
                 })
             }
         </Container>

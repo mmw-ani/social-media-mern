@@ -39,10 +39,6 @@ function App() {
     getUserDetails()
   },[setUserDetails,setLoading])
 
-  function followButtonTriggered(){
-    getUserDetails();
-  }
-  
   if(isLoading){
       return (
         <div className="loading-spinner-style">
@@ -67,9 +63,9 @@ function App() {
                     <Route path="/posts/:postId" element={<Posts />} />
                     <Route path="/users/" element={<AllUser />} />
                     <Route path="/user/:username/" element={<UserPublicProfile />} />
-                    <Route path="/user/:username/followers" element={<Followers following={userDetails.following} username={userDetails.username} followButtonTriggered={followButtonTriggered} />} />
-                    <Route path="/user/:username/following" element={<Following following={userDetails.following} username={userDetails.username} followButtonTriggered={followButtonTriggered} />} />
-                    <Route path="/posts/:postId/likes" element={<PostLikes />} />
+                    <Route path="/user/:username/followers" element={<Followers following={userDetails.following} username={userDetails.username}  />} />
+                    <Route path="/user/:username/following" element={<Following following={userDetails.following} username={userDetails.username} />} />
+                    <Route path="/posts/:postId/likes" element={<PostLikes following={userDetails.following} username={userDetails.username}  />} />
                     <Route path="/profile" element={<UserPublicProfile username={userDetails.username} />} />
                 </Routes>
                 
