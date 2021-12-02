@@ -25,11 +25,11 @@ function PostLikes(props) {
             {
                 likedBy.map((like)=>{
                     let sameUser = false;
-                            if(following.username === props.username){ 
+                            if(like.username === props.username){ 
                                 sameUser=true;
                             }
                             let isFollowing=false;
-                            if(props.following.find(item=>item.username===following.username)){
+                            if(props.following.find(item=>item.username===like.username)){
                                 isFollowing=true;
                             }
 
