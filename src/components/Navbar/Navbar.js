@@ -18,7 +18,11 @@ function Navbar(props) {
             <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <div className="navbar-nav ml-auto text-center">
                 
-                {userDetails ?<Button className="nav-link logout-button" onClick={logout}>Logout</Button>
+                {userDetails ?<div className="d-sm-flex">
+                    <Button className="nav-link logout-button" onClick={logout}>Logout</Button>
+                    <NavLink className="nav-link" to="/users">Users</NavLink>
+                    <NavLink className="nav-link" to="/explore">Explore</NavLink>
+                    </div>
                     :<div className=" d-sm-flex  text-center">
                         <NavLink className="nav-link" to="/login">Login</NavLink>
                         <NavLink className="nav-link" to="/register">Register</NavLink>

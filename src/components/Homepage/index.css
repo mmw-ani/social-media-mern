@@ -4,6 +4,10 @@
     align-items: center;
     height: 100vh;
 }
+body{
+    min-height: 100vh;
+     margin:0;
+}
 .logout-button{
     background-color: transparent;
     border: 0px;
@@ -41,6 +45,12 @@ textarea{
     font-size: 22px;
     border-radius: 50%;
 }
-footer-link:hover{
-    color:red;
+a:hover{
+    opacity: 1;
+    text-decoration: none;
+}
+.footer-container{
+    
+   margin-top: 172px;
+    width: 100%;
 }

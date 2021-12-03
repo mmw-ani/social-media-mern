@@ -15,6 +15,8 @@ import UserPublicProfile from './components/User/UserPublicProfile';
 import PostLikes from './components/Posts/PostLikes';
 import Followers from './components/Follow/Followers';
 import Following from './components/Follow/Following';
+import "./components/Homepage/index.css"
+import Explore from './components/Explore';
 
 function App() {
   const [userDetails,setUserDetails] = useState("");
@@ -62,6 +64,7 @@ function App() {
                     <Route path="/" element={<Homepage userDetails={userDetails}/>} />
                     <Route path="/posts/:postId" element={<Posts />} />
                     <Route path="/users/" element={<AllUser />} />
+                    <Route path="/explore" element={<Explore />} />
                     <Route path="/user/:username/" element={<UserPublicProfile />} />
                     <Route path="/user/:username/followers" element={<Followers following={userDetails.following} username={userDetails.username}  />} />
                     <Route path="/user/:username/following" element={<Following following={userDetails.following} username={userDetails.username} />} />

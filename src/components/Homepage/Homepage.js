@@ -26,7 +26,7 @@ export default class Homepage extends Component {
     
     }
     getAllPost = ()=>{
-        axiosInstance.get("/api/post/")
+        axiosInstance.get("/api/feed/")
         .then((response)=>{
             const posts = response.data
             if(this._isMounted){
@@ -102,7 +102,7 @@ export default class Homepage extends Component {
             nameOfUser = nameOfUser.toUpperCase();
         }
         return (
-            
+
                 <Container className="">
                     {!userIsLoggedIn&&
                         <Navigate to="/login" replace={true} /> 
@@ -148,9 +148,9 @@ export default class Homepage extends Component {
                         </div>
                     }
                     <hr/>
-                    {
-                        
-                        result
+                    {   this.state.posts.length 
+                        ?result
+                        :<p className="text-center">Follow Users to see post.</p>
                     }
                     </Col>
                     <Col className="text-center d-none d-lg-block" lg={3}>
