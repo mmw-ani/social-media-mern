@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import {Button, Container} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 import axiosInstance from "../../axiosInstance";
 import { useNavigate,Navigate } from "react-router";
 import "./index.css"
@@ -71,7 +72,7 @@ function Login(props) {
                 <Button type="submit" className="btn-dark w-75">Login</Button>
                 </div>
             </form>
-            
+            <p className="text-center mt-3 mb-0">Don't have a account? <Link to="/register">Register</Link></p>
         </Container>
     )
 }

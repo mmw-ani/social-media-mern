@@ -41,3 +41,6 @@ textarea{
     font-size: 22px;
     border-radius: 50%;
 }
+footer-link:hover{
+    color:red;
+}

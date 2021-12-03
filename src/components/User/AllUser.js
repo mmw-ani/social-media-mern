@@ -62,7 +62,7 @@ function UserCard(props){
     
     return(
         <Container>        
-            <Row className="shadow mx-auto mt-4 p-3">
+            <Row className="shadow mx-auto mt-4 py-3">
             <Col xs={2} className="text-center">
                 <p className="homepage-image-box">
                     {nameOfUser}
